@@ -1,4 +1,4 @@
-class SortingDto {
+export class SortingDto {
   constructor(
     readonly created?: string,
     readonly level?: string

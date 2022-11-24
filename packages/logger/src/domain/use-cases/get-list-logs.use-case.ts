@@ -1,17 +1,18 @@
-import {left, right, Either} from '@sweet-monads/either';
+import {left, Either} from '@sweet-monads/either';
+import { SortingDto } from '../dtos/sorting.dto';
 import { FilterDto } from '../dtos/filter.dto';
 import { PaginationDto } from '../dtos/pagination.dto';
 import { DomainError } from '../errors/domain.error';
 import { InfrastructureError } from '../errors/infrastructure.error';
 import { LogEntity } from '../log.entity';
-import { GetListPort } from '../ports/get-list.port';
+import { GetListLogsPort } from '../ports/get-list-logs.port';
 import { FilterValueObject } from '../value-objects/filter.value-object';
 import { PaginationValueObject } from '../value-objects/pagination.value-object';
 import { SortingValueObject } from '../value-objects/sorting.value-object';
 
-export class GetListUseCase {
+export class GetListLogsUseCase {
   constructor(
-    private readonly getListPort: GetListPort
+    private readonly getListLogsPort: GetListLogsPort
   ){}
 
   async get(
@@ -32,10 +33,10 @@ export class GetListUseCase {
     let filterValueObject: FilterValueObject | null = null;
     if (filterDto) {
       const maybeFilterValueObject = FilterValueObject.new(
-        filterDto?.createdFrom,
-        filterDto?.createdTo,
-        filterDto?.service,
-        filterDto?.level
+        filterDto.createdFrom,
+        filterDto.createdTo,
+        filterDto.service,
+        filterDto.level
       );
       
       if (maybeFilterValueObject.isLeft()) {
@@ -44,14 +45,20 @@ export class GetListUseCase {
 
       if (maybeFilterValueObject.isRight()) {
         filterValueObject = maybeFilterValueObject.value;
+
+        if (filterValueObject.createdFrom && filterValueObject.createdto) {
+          if (filterValueObject.createdFrom.getTime() >= filterValueObject.createdto.getTime()) {
+            return left(new DomainError('Invalid date period'));
+          } 
+        }
       }
     }
 
     let sortingValueObject: SortingValueObject | null = null;
-    if (filterDto) {
+    if (sortingDto) {
       const maybeSortingValueObject = SortingValueObject.new(
-        sortingDto?.created,
-        sortingDto?.level
+        sortingDto.created,
+        sortingDto.level
       );
       
       if (maybeSortingValueObject.isLeft()) {
@@ -63,7 +70,7 @@ export class GetListUseCase {
       }
     }
 
-    return this.getListPort.get(
+    return this.getListLogsPort.get(
       maybePaginationValueObject.value,
       filterValueObject,
       sortingValueObject

@@ -11,7 +11,7 @@ export class ServiceValueObject {
       return left(new DomainError('Invalid name of service'));
     }
 
-    if (!service.match(/^[0-9A-za-z]?)$/)) {
+    if (!service.match(/^[a-zA-Z\w\s]+$/)) {
       return left(new DomainError('Invalid name of service'));
     }
 

@@ -14,8 +14,8 @@ export class FilterValueObject {
   static new(
     from?: string,
     to?: string,
-    level?: string,
-    service?: string
+    service?: string,
+    level?: string
   ): Either<DomainError, FilterValueObject> {
     if (!from && !to && !level && !service) {
       return left(new DomainError('Invalid filter input data'));
