@@ -1,1 +1,1 @@
-const t = '';
+export * from './domain';
