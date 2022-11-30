@@ -1,18 +1,22 @@
 {
-  "name": "logger",
+  "name": "core",
   "version": "0.0.0",
   "description": "> TODO: description",
-  "author": "stasMorozik <stanislav.morozov1107@gmail.com>",
-  "homepage": "",
+  "author": "Stas <mstani11907@gmail.com>",
+  "homepage": "https://github.com/stasMorozik/service-logger#readme",
   "license": "ISC",
   "main": "lib/index.js",
   "directories": {
     "lib": "lib",
-    "test": "__tests__/t/"
+    "test": "__tests__"
   },
   "files": [
     "lib"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stasMorozik/service-logger.git"
+  },
   "scripts": {
     "build": "webpack --mode production",
     "test": "jest"
@@ -31,5 +35,8 @@
   },
   "dependencies": {
     "@sweet-monads/either": "^3.1.0"
+  },
+  "bugs": {
+    "url": "https://github.com/stasMorozik/service-logger/issues"
   }
 }
