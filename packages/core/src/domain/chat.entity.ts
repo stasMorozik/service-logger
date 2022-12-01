@@ -6,7 +6,7 @@ export class ChatEntity {
     readonly chatId: number
   ){}
 
-  static new(chatId: number): Either<DomainError, ChatEntity> {
+  static new(chatId: number): Either<DomainError, ChatEntity> {    
     if (typeof chatId != 'number') {
       return left(new DomainError('Invalid id chat'));
     }
